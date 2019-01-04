@@ -34,8 +34,9 @@ We're always interested in your feedback and our [premium forums](https://theeve
 = [1.0.2] 2019-01-07 =
 
 * Fix - Added missing .pot file for translators
-* Fix - Corrected context for multiple translatable strings (props @zArubaru on GitHub)
+* Fix - Corrected context for multiple translatable strings (props @zArubaru on GitHub) [120448]
 * Fix - Corrected the Extension article link
+* Fix - Avoid fatal error when The Events Calendar is not active (props to Alejandro in our Help Desk) [120234]
 * Tweak - Now requires PHP 5.6+
 * Tweak - Now requires Event Tickets Plus 4.5.6+ (from October 18, 2017)
 * Tweak - Added GitHub Updater compatibility

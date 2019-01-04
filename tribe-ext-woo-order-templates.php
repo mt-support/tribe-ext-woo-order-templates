@@ -27,11 +27,13 @@ namespace Tribe\Extensions\ETWooOrderDetails;
 
 use Tribe__Autoloader;
 use Tribe__Events__Community__Tickets__Main;
+use Tribe__Events__Main;
 use Tribe__Extension;
 use Tribe__Simple_Table;
 use Tribe__Tickets_Plus__Commerce__WooCommerce__Main;
 use Tribe__Tickets_Plus__Main;
 use Tribe__Tickets_Plus__Meta;
+use WP_Post;
 
 /**
  * Define Constants
@@ -83,7 +85,6 @@ if (
 		 * Extension initialization and hooks.
 		 */
 		public function init() {
-			// Load plugin textdomain
 			load_plugin_textdomain( PLUGIN_TEXT_DOMAIN, false, basename( dirname( __FILE__ ) ) . '/languages/' );
 
 			if ( ! $this->php_version_check() ) {
@@ -137,8 +138,6 @@ if (
 		/**
 		 * Use Tribe Autoloader for all class files within this namespace in the 'src' directory.
 		 *
-		 * TODO: Delete this method and its usage throughout this file if there is no `src` directory, such as if there are no settings being added to the admin UI.
-		 *
 		 * @return Tribe__Autoloader
 		 */
 		public function class_loader() {
@@ -160,6 +159,7 @@ if (
 		 * Echoes the attendee meta when attached to relevant Woo Action
 		 *
 		 * @see action woocommerce_order_item_meta_end
+		 * @see Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_event_for_ticket()
 		 */
 		public function woocommerce_echo_event_info( $item_id, $item, $order, $plain_text = '' ) {
 			$wootix       = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
@@ -175,10 +175,15 @@ if (
 				$order_status
 			);
 
+			// This is either true or a WP_Post, such as for any enabled post type (such as a ticket on a Page), not just for Tribe Events.
 			$event = $wootix->get_event_for_ticket( $item_data['product_id'] );
 
 			// Show event details if this ticket is for a tribe event.
-			if ( ! empty( $event ) ) {
+			if (
+				$event instanceof WP_Post
+				&& class_exists( 'Tribe__Events__Main' )
+				&& Tribe__Events__Main::POSTTYPE === $event->post_type
+			) {
 				$event_time    = tribe_events_event_schedule_details( $event, '<em>', '</em>' );
 				$event_address = tribe_get_full_address( $event );
 				$event_details = [];
