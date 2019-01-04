@@ -1,17 +1,14 @@
 <?php
-// Do not load directly.
-if ( ! defined( 'ABSPATH' ) ) {
-	die( '-1' );
-}
+namespace Tribe\Extensions\ETWooOrderDetails;
 
-if ( class_exists( 'Tribe__Extension__Tickets_Order_Helper' ) ) {
-	return;
-}
+use Tribe__Tickets__Tickets;
+use Tribe__Tickets__RSVP;
+use ReflectionClass;
 
 /**
  * Helps get the Event IDs, attendees, and ticket provider associated with an order ID
  */
-class Tribe__Extension__Tickets_Order_Helper {
+class Tickets_Order_Helper {
 
 	/**
 	 * The ID of the order this class will assist with
