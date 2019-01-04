@@ -5,7 +5,7 @@ Tags: events, calendar, tickets, woocommerce
 Requires at least: 4.5
 Tested up to: 5.0.2
 Requires PHP: 5.6
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPL version 3 or any later version
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -33,8 +33,8 @@ We're always interested in your feedback and our [premium forums](https://theeve
 
 = [1.0.2] 2019-01-07 =
 
-* Fix - Added missing translations
-* Fix - Corrected a translation's context (props @zArubaru)
+* Fix - Added missing .pot file for translators
+* Fix - Corrected context for multiple translatable strings (props @zArubaru on GitHub)
 * Fix - Corrected the Extension article link
 * Tweak - Now requires PHP 5.6+
 * Tweak - Now requires Event Tickets Plus 4.5.6+ (from October 18, 2017)
