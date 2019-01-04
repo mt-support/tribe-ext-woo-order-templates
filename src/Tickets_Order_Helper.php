@@ -1,9 +1,10 @@
 <?php
+
 namespace Tribe\Extensions\ETWooOrderDetails;
 
-use Tribe__Tickets__Tickets;
-use Tribe__Tickets__RSVP;
 use ReflectionClass;
+use Tribe__Tickets__RSVP;
+use Tribe__Tickets__Tickets;
 
 /**
  * Helps get the Event IDs, attendees, and ticket provider associated with an order ID
@@ -46,9 +47,19 @@ class Tickets_Order_Helper {
 	 *
 	 * @return string|null
 	 */
+
+	/**
+	 * Gets the ticket provider classname
+	 *
+	 * @return string|null
+	 */
+	public function get_provider_classname() {
+		return $this->provider_classname;
+	}
+
 	protected function set_provider_classname() {
 		$ticket_modules = Tribe__Tickets__Tickets::modules();
-		$class_name = null;
+		$class_name     = null;
 
 		// Accounts for RSVPs not having grouped orders.
 		if ( Tribe__Tickets__RSVP::ATTENDEE_OBJECT === get_post_type( $this->order_id ) ) {
@@ -67,17 +78,8 @@ class Tickets_Order_Helper {
 
 		if ( null !== $class_name ) {
 			$this->provider_classname = $class_name;
-			$this->provider_instance = $class_name::get_instance();
+			$this->provider_instance  = $class_name::get_instance();
 		}
-	}
-
-	/**
-	 * Gets the ticket provider classname
-	 *
-	 * @return string|null
-	 */
-	public function get_provider_classname() {
-		return $this->provider_classname;
 	}
 
 	/**
@@ -120,12 +122,12 @@ class Tickets_Order_Helper {
 
 			// Oddly the attendees email demands a slightly different format for most of these.
 			// So below we duplicate keys to give it the format it expects.
-			$attendee['event_id'] = $this->provider_instance->get_event_id_from_attendee_id( $attendee['attendee_id'] );
-			$attendee['ticket_name'] = $attendee['ticket'];
-			$attendee['holder_name'] = $attendee['purchaser_name'];
-			$attendee['order_id'] = $this->order_id;
-			$attendee['ticket_id'] = $attendee['product_id'];
-			$attendee['qr_ticket_id'] = $attendee['attendee_id'];
+			$attendee['event_id']      = $this->provider_instance->get_event_id_from_attendee_id( $attendee['attendee_id'] );
+			$attendee['ticket_name']   = $attendee['ticket'];
+			$attendee['holder_name']   = $attendee['purchaser_name'];
+			$attendee['order_id']      = $this->order_id;
+			$attendee['ticket_id']     = $attendee['product_id'];
+			$attendee['qr_ticket_id']  = $attendee['attendee_id'];
 			$attendee['security_code'] = $attendee['security'];
 
 			$order_attendees[] = $attendee;
@@ -147,8 +149,8 @@ class Tickets_Order_Helper {
 			$id_query = get_post_meta( $this->order_id, Tribe__Tickets__RSVP::ATTENDEE_EVENT_KEY );
 
 			foreach ( $id_query as $i ) {
-				$id = intval( $i );
-				$event_ids[ $id ] = $id;
+				$id             = intval( $i );
+				$event_ids[$id] = $id;
 			}
 		} elseif ( ! empty( $this->provider_classname ) ) {
 			$class_reflection   = new ReflectionClass( $this->provider_instance );
@@ -160,16 +162,18 @@ class Tickets_Order_Helper {
 				return $event_ids;
 			}
 
-			$attendees = get_posts( array(
-				'post_type'  => $attendee_object,
-				'meta_key'   => $attendee_order_key,
-				'meta_value' => $this->order_id,
-				'posts_per_page' => -1,
-			) );
+			$attendees = get_posts(
+				array(
+					'post_type'      => $attendee_object,
+					'meta_key'       => $attendee_order_key,
+					'meta_value'     => $this->order_id,
+					'posts_per_page' => - 1,
+				)
+			);
 
 			foreach ( $attendees as $i ) {
-				$id = $this->provider_instance->get_event_id_from_attendee_id( $i->ID );
-				$event_ids [ $id ] = $id;
+				$id              = $this->provider_instance->get_event_id_from_attendee_id( $i->ID );
+				$event_ids [$id] = $id;
 			}
 		}
 

@@ -28,6 +28,7 @@ if ( ! function_exists( 'tribe_call_private_method' ) ) {
 		if ( version_compare( PHP_VERSION, '5.3.2', '<' ) ) {
 			$exception = new Exception( 'This function requires PHP 5.3.2 or newer.' );
 			_doing_it_wrong( __FUNCTION__, $exception->getMessage(), 'N/A' );
+
 			return $exception;
 		}
 
@@ -37,6 +38,7 @@ if ( ! function_exists( 'tribe_call_private_method' ) ) {
 
 		$reflection_method = new ReflectionMethod( get_class( $instance ), $method );
 		$reflection_method->setAccessible( true );
+
 		return $reflection_method->invokeArgs( $instance, $args );
 	}
 }

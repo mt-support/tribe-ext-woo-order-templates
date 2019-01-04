@@ -26,10 +26,10 @@
 namespace Tribe\Extensions\ETWooOrderDetails;
 
 use Tribe__Autoloader;
-use Tribe__Extension;
 use Tribe__Events__Community__Tickets__Main;
-use Tribe__Tickets_Plus__Commerce__WooCommerce__Main;
+use Tribe__Extension;
 use Tribe__Simple_Table;
+use Tribe__Tickets_Plus__Commerce__WooCommerce__Main;
 use Tribe__Tickets_Plus__Main;
 use Tribe__Tickets_Plus__Meta;
 
@@ -163,9 +163,9 @@ if (
 		 * @see action woocommerce_order_item_meta_end
 		 */
 		public function woocommerce_echo_event_info( $item_id, $item, $order, $plain_text = '' ) {
-			$wootix = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
+			$wootix       = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
 			$order_status = $order->get_status();
-			$item_data = $item->get_data();
+			$item_data    = $item->get_data();
 
 			// Generate tickets early so we can get attendee meta.
 			// Note, if the default order status is one that does affect stock, no tickets will be generated.
@@ -180,7 +180,7 @@ if (
 
 			// Show event details if this ticket is for a tribe event.
 			if ( ! empty( $event ) ) {
-				$event_time = tribe_events_event_schedule_details( $event, '<em>', '</em>' );
+				$event_time    = tribe_events_event_schedule_details( $event, '<em>', '</em>' );
 				$event_address = tribe_get_full_address( $event );
 				$event_details = [];
 
@@ -233,7 +233,7 @@ if (
 		 */
 		protected function echo_attendee_meta( $order_id, $ticket_id = null ) {
 			$order_helper = new Tickets_Order_Helper( $order_id );
-			$attendees = $order_helper->get_attendees();
+			$attendees    = $order_helper->get_attendees();
 
 			foreach ( $attendees as $attendee ) {
 				// Skip attendees that are not for this ticket type.
@@ -269,9 +269,9 @@ if (
 					esc_html( $attendee['security_code'] ),
 				];
 
-				$table = new Tribe__Simple_Table( $table_columns );
+				$table                        = new Tribe__Simple_Table( $table_columns );
 				$table->html_escape_td_values = false;
-				$table->table_attributes = [
+				$table->table_attributes      = [
 					'class' => 'tribe-attendee-meta',
 				];
 
@@ -291,7 +291,7 @@ if (
 			$output = [];
 
 			$meta_fields = Tribe__Tickets_Plus__Main::instance()->meta()->get_meta_fields_by_ticket( $ticket_id );
-			$meta_data = get_post_meta( $qr_ticket_id, Tribe__Tickets_Plus__Meta::META_KEY, true );
+			$meta_data   = get_post_meta( $qr_ticket_id, Tribe__Tickets_Plus__Meta::META_KEY, true );
 
 			foreach ( $meta_fields as $field ) {
 				if ( 'checkbox' === $field->type && isset( $field->extra['options'] ) ) {
@@ -299,21 +299,21 @@ if (
 					foreach ( $field->extra['options'] as $option ) {
 						$key = $field->slug . '_' . sanitize_title( $option );
 
-						if ( isset( $meta_data[ $key ] ) ) {
-							$values[] = $meta_data[ $key ];
+						if ( isset( $meta_data[$key] ) ) {
+							$values[] = $meta_data[$key];
 						}
 					}
 
 					$value = implode( ', ', $values );
-				} elseif ( isset( $meta_data[ $field->slug ] ) ) {
-					$value = $meta_data[ $field->slug ];
+				} elseif ( isset( $meta_data[$field->slug] ) ) {
+					$value = $meta_data[$field->slug];
 				} else {
 					continue;
 				}
 
 				if ( ! empty( $value ) ) {
-					$output[ $field->slug ] = [
-						'slug' => $field->slug,
+					$output[$field->slug] = [
+						'slug'  => $field->slug,
 						'label' => $field->label,
 						'value' => $value,
 					];
