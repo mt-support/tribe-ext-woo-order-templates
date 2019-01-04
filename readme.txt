@@ -1,21 +1,15 @@
-=== [Extension Name] ===
+=== Event Tickets Plus Extension: Enhance Woo Order Templates ===
 Contributors: ModernTribe
 Donate link: http://m.tri.be/29
-Tags: events, calendar
+Tags: events, calendar, tickets, woocommerce
 Requires at least: 4.5
-Tested up to: 4.9.6
+Tested up to: 5.0.2
 Requires PHP: 5.6
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPL version 3 or any later version
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-[Extension Description]
-
-== Description ==
-
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
-
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and Markdown parsed.
+Adds event and attendee information to the WooCommerce order pages, including emails and the checkout screen.
 
 == Installation ==
 
@@ -37,6 +31,19 @@ We're always interested in your feedback and our [premium forums](https://theeve
 
 == Changelog ==
 
-= [1.0.0] YYYY-MM-DD =
+= [1.0.2] 2019-01-07 =
+
+* Fix - Added missing translations
+* Fix - Corrected a translation's context (props @zArubaru)
+* Fix - Corrected the Extension article link
+* Tweak - Now requires PHP 5.6+
+* Tweak - Added GitHub Updater compatibility
+* Tweak - Changed from GPLv2+ to GPLv3+
+
+= [1.0.1] 2017-04-14 =
+
+* Made WooCommerce 3.x compatible
+
+= [1.0.0] 2017-01-30 =
 
 * Initial release

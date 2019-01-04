@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name:       [Base Plugin Name] Extension: [Extension Name]
- * Plugin URI:        https://theeventscalendar.com/extensions/---the-extension-article-url---/
- * GitHub Plugin URI: https://github.com/mt-support/tribe-ext-extension-template
- * Description:       [Extension Description]
- * Version:           1.0.0
- * Extension Class:   Tribe\Extensions\Example\Main
+ * Plugin Name:       Event Tickets Plus Extension: Enhance Woo Order Templates
+ * Plugin URI:        https://theeventscalendar.com/extensions/add-event-and-attendee-information-to-woocommerce-order-details/
+ * GitHub Plugin URI: https://github.com/mt-support/tribe-ext-woo-order-templates
+ * Description:       Adds event and attendee information to the WooCommerce order pages, including emails and the checkout screen.
+ * Version:           1.0.1
+ * Extension Class:   Tribe\Extensions\ETWooOrderDetails\Main
  * Author:            Modern Tribe, Inc.
  * Author URI:        http://m.tri.be/1971
  * License:           GPL version 3 or any later version
@@ -23,9 +23,8 @@
  *     GNU General Public License for more details.
  */
 
-namespace Tribe\Extensions\Example;
+namespace Tribe\Extensions\ETWooOrderDetails;
 
-use Tribe__Autoloader;
 use Tribe__Dependency;
 use Tribe__Extension;
 
@@ -38,7 +37,7 @@ if ( ! defined( __NAMESPACE__ . '\NS' ) ) {
 }
 
 if ( ! defined( NS . 'PLUGIN_TEXT_DOMAIN' ) ) {
-	// `Tribe\Extensions\Example\PLUGIN_TEXT_DOMAIN` is defined
+	// `Tribe\Extensions\ETWooOrderDetails\PLUGIN_TEXT_DOMAIN` is defined
 	define( NS . 'PLUGIN_TEXT_DOMAIN', 'tribe-ext-extension-template' );
 }
 
@@ -51,23 +50,6 @@ if (
 	 * Extension main class, class begins loading on init() function.
 	 */
 	class Main extends Tribe__Extension {
-
-		/**
-		 * @var Tribe__Autoloader
-		 */
-		private $class_loader;
-
-		/**
-		 * @var Settings
-		 */
-		private $settings;
-
-		/**
-		 * Custom options prefix (without trailing underscore).
-		 *
-		 * Should leave blank unless you want to set it to something custom, such as if migrated from old extension.
-		 */
-		private $opts_prefix = '';
 
 		/**
 		 * Is Events Calendar PRO active. If yes, we will add some extra functionality.
@@ -119,63 +101,21 @@ if (
 		}
 
 		/**
-		 * Get Settings instance.
-		 *
-		 * @return Settings
-		 */
-		private function get_settings() {
-			if ( empty( $this->settings ) ) {
-				$this->settings = new Settings( $this->opts_prefix );
-			}
-
-			return $this->settings;
-		}
-
-		/**
 		 * Extension initialization and hooks.
 		 */
 		public function init() {
 			// Load plugin textdomain
-			// Don't forget to generate the 'languages/tribe-ext-extension-template.pot' file
 			load_plugin_textdomain( PLUGIN_TEXT_DOMAIN, false, basename( dirname( __FILE__ ) ) . '/languages/' );
 
 			if ( ! $this->php_version_check() ) {
 				return;
 			}
-
-			$this->class_loader();
-
-			$this->get_settings();
-
-			// TODO: Just a test. Remove this.
-			$this->testing_hello_world();
-
-			// Insert filters and hooks here
-			add_filter( 'thing_we_are_filtering', [ $this, 'my_custom_function' ] );
 		}
 
 		/**
 		 * Check if we have a sufficient version of PHP. Admin notice if we don't and user should see it.
 		 *
 		 * @link https://theeventscalendar.com/knowledgebase/php-version-requirement-changes/ All extensions require PHP 5.6+.
-		 *
-		 * Delete this paragraph and the non-applicable comments below.
-		 * Make sure to match the readme.txt header.
-		 *
-		 * Note that older version syntax errors may still throw fatals even
-		 * if you implement this PHP version checking so QA it at least once.
-		 *
-		 * @link https://secure.php.net/manual/en/migration56.new-features.php
-		 * 5.6: Variadic Functions, Argument Unpacking, and Constant Expressions
-		 *
-		 * @link https://secure.php.net/manual/en/migration70.new-features.php
-		 * 7.0: Return Types, Scalar Type Hints, Spaceship Operator, Constant Arrays Using define(), Anonymous Classes, intdiv(), and preg_replace_callback_array()
-		 *
-		 * @link https://secure.php.net/manual/en/migration71.new-features.php
-		 * 7.1: Class Constant Visibility, Nullable Types, Multiple Exceptions per Catch Block, `iterable` Pseudo-Type, and Negative String Offsets
-		 *
-		 * @link https://secure.php.net/manual/en/migration72.new-features.php
-		 * 7.2: `object` Parameter and Covariant Return Typing, Abstract Function Override, and Allow Trailing Comma for Grouped Namespaces
 		 *
 		 * @return bool
 		 */
@@ -202,70 +142,6 @@ if (
 			}
 
 			return true;
-		}
-
-		/**
-		 * Use Tribe Autoloader for all class files within this namespace in the 'src' directory.
-		 *
-		 * TODO: Delete this method and its usage throughout this file if there is no `src` directory, such as if there are no settings being added to the admin UI.
-		 *
-		 * @return Tribe__Autoloader
-		 */
-		public function class_loader() {
-			if ( empty( $this->class_loader ) ) {
-				$this->class_loader = new Tribe__Autoloader;
-				$this->class_loader->set_dir_separator( '\\' );
-				$this->class_loader->register_prefix(
-					NS,
-					__DIR__ . DIRECTORY_SEPARATOR . 'src'
-				);
-			}
-
-			$this->class_loader->register_autoloader();
-
-			return $this->class_loader;
-		}
-
-		/**
-		 * TODO: Testing Hello World. Delete this for your new extension.
-		 */
-		public function testing_hello_world() {
-			$message = sprintf( '<p>Hello World from %s. Make sure to remove this in your own new extension.</p>', '<strong>' . $this->get_name() . '</strong>' );
-
-			$message .= sprintf( '<p><strong>Bonus!</strong> Get one of our own custom option values: %s</p><p><em>See the code to learn more.</em></p>', $this->get_one_custom_option() );
-
-			tribe_notice( PLUGIN_TEXT_DOMAIN . '-hello-world', $message, [ 'type' => 'info' ] );
-		}
-
-		/**
-		 * Demonstration of getting this extension's `a_setting` option value.
-		 *
-		 * TODO: Rework or remove this.
-		 *
-		 * @return mixed
-		 */
-		public function get_one_custom_option() {
-			$settings = $this->get_settings();
-
-			return $settings->get_option( 'a_setting', 'https://theeventscalendar.com/' );
-		}
-
-		/**
-		 * Get all of this extension's options.
-		 *
-		 * @return array
-		 */
-		public function get_all_options() {
-			$settings = $this->get_settings();
-
-			return $settings->get_all_options();
-		}
-
-		/**
-		 * Include a docblock for every class method and property.
-		 */
-		public function my_custom_function() {
-			// do your custom stuff
 		}
 
 	} // end class
