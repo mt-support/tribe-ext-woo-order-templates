@@ -97,7 +97,7 @@ if (
 
 			add_action( 'woocommerce_order_item_meta_start', [ $this, 'woocommerce_echo_event_info' ], 100, 4 );
 
-			// Hide the event title that gets added by Community Tickets, to prevent duplicates.
+			// Hide the event title that gets added by Community Tickets, to prevent duplicates
 			if ( class_exists( 'Tribe__Events__Community__Tickets__Main' ) ) {
 				remove_action( 'woocommerce_order_item_meta_start', [ Tribe__Events__Community__Tickets__Main::instance(), 'add_order_item_details' ], 10 );
 			}
@@ -156,9 +156,9 @@ if (
 		}
 
 		/**
-		 * Echoes the attendee meta when attached to relevant Woo Action
+		 * Echoes the attendee meta when attached to relevant WooCommerce action.
 		 *
-		 * @see action woocommerce_order_item_meta_end
+		 * @see action woocommerce_order_item_meta_start
 		 * @see Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_event_for_ticket()
 		 */
 		public function woocommerce_echo_event_info( $item_id, $item, $order, $plain_text = '' ) {
@@ -177,6 +177,11 @@ if (
 
 			// This is either true or a WP_Post, such as for any enabled post type (such as a ticket on a Page), not just for Tribe Events.
 			$event = $wootix->get_event_for_ticket( $item_data['product_id'] );
+
+			// Bail if no connected post, since it's required of a WooCommerce Ticket but not of all WooCommerce Products
+			if ( empty( $event ) ) {
+				return;
+			}
 
 			// Show event details if this ticket is for a tribe event.
 			if (
