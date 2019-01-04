@@ -181,7 +181,7 @@ if (
 			if ( ! empty( $event ) ) {
 				$event_time = tribe_events_event_schedule_details( $event, '<em>', '</em>' );
 				$event_address = tribe_get_full_address( $event );
-				$event_details = array();
+				$event_details = [];
 
 				// Output event title in same format as Community Tickets.
 				$event_details[] = sprintf(
@@ -240,9 +240,9 @@ if (
 					continue;
 				}
 
-				$table_columns = array();
+				$table_columns = [];
 
-				$table_columns[] = array(
+				$table_columns[] = [
 					sprintf(
 						'<strong class="tribe-attendee-meta-heading">%1$s</strong>',
 						esc_html_x( 'Ticket ID', 'Attendee meta table.', PLUGIN_TEXT_DOMAIN )
@@ -251,28 +251,28 @@ if (
 						'<strong class="tribe-attendee-meta-heading">%1$s</strong>',
 						esc_html( $attendee['ticket_id'] )
 					),
-				);
+				];
 
 				$fields = $this->get_attendee_meta( $attendee['product_id'], $attendee['qr_ticket_id'] );
 				if ( ! empty( $fields ) ) {
 					foreach ( $fields as $field ) {
-						$table_columns[] = array(
+						$table_columns[] = [
 							esc_html( $field['label'] ),
 							esc_html( $field['value'] ),
-						);
+						];
 					}
 				}
 
-				$table_columns[] = array(
+				$table_columns[] = [
 					esc_html_x( 'Security Code', 'Attendee meta table.', PLUGIN_TEXT_DOMAIN ),
 					esc_html( $attendee['security_code'] ),
-				);
+				];
 
 				$table = new Tribe__Simple_Table( $table_columns );
 				$table->html_escape_td_values = false;
-				$table->table_attributes = array(
+				$table->table_attributes = [
 					'class' => 'tribe-attendee-meta',
-				);
+				];
 
 				echo $table->output_table();
 			}
@@ -287,14 +287,14 @@ if (
 		 * @return array Attendee meta array.
 		 */
 		protected function get_attendee_meta( $ticket_id, $qr_ticket_id ) {
-			$output = array();
+			$output = [];
 
 			$meta_fields = Tribe__Tickets_Plus__Main::instance()->meta()->get_meta_fields_by_ticket( $ticket_id );
 			$meta_data = get_post_meta( $qr_ticket_id, Tribe__Tickets_Plus__Meta::META_KEY, true );
 
 			foreach ( $meta_fields as $field ) {
 				if ( 'checkbox' === $field->type && isset( $field->extra['options'] ) ) {
-					$values = array();
+					$values = [];
 					foreach ( $field->extra['options'] as $option ) {
 						$key = $field->slug . '_' . sanitize_title( $option );
 
@@ -311,11 +311,11 @@ if (
 				}
 
 				if ( ! empty( $value ) ) {
-					$output[ $field->slug ] = array(
+					$output[ $field->slug ] = [
 						'slug' => $field->slug,
 						'label' => $field->label,
 						'value' => $value,
-					);
+					];
 				}
 			}
 
