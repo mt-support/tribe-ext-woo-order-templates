@@ -15,7 +15,7 @@ if ( ! function_exists( 'tribe_call_private_method' ) ) {
 	 * tribe_call_private_method(
 	 *      Tribe__Class::instance(),
 	 *      'set_something',
-	 *      array( $var1, $var2 )
+	 *      [ $var1, $var2 ]
 	 * );
 	 *
 	 * @param object $instance The class instance with the private method
@@ -24,16 +24,16 @@ if ( ! function_exists( 'tribe_call_private_method' ) ) {
 	 *
 	 * @return mixed|exception Returns method or exception on PHP 5.2
 	 */
-	function tribe_call_private_method( $instance, $method, $args = array() ) {
-		if ( version_compare( PHP_VERSION, '5.3.2', '<' ) ) {
-			$exception = new Exception( 'This function requires PHP 5.3.2 or newer.' );
+	function tribe_call_private_method( $instance, $method, $args = [] ) {
+		if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
+			$exception = new Exception( 'This function requires PHP 5.6 or newer.' );
 			_doing_it_wrong( __FUNCTION__, $exception->getMessage(), 'N/A' );
 
 			return $exception;
 		}
 
 		if ( ! is_array( $args ) ) {
-			$args = array( $args );
+			$args = [ $args ];
 		}
 
 		$reflection_method = new ReflectionMethod( get_class( $instance ), $method );

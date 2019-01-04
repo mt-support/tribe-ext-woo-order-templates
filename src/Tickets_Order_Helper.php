@@ -97,14 +97,14 @@ class Tickets_Order_Helper {
 	 * @return array List of attendees
 	 */
 	public function get_attendees() {
-		$order_attendees = array();
+		$order_attendees = [];
 
 		// If we have not found an active ticker provider, we're out of luck.
 		if ( empty( $this->provider_instance ) ) {
 			return $order_attendees;
 		}
 
-		$event_attendees = array();
+		$event_attendees = [];
 
 		$event_ids = $this->get_event_ids();
 
@@ -142,7 +142,7 @@ class Tickets_Order_Helper {
 	 * @return array All event IDs found, can be empty
 	 */
 	public function get_event_ids() {
-		$event_ids = array();
+		$event_ids = [];
 
 		// Account for RSVP not having proper order IDs.
 		if ( 'Tribe__Tickets__RSVP' === $this->provider_classname ) {
@@ -163,12 +163,12 @@ class Tickets_Order_Helper {
 			}
 
 			$attendees = get_posts(
-				array(
+				[
 					'post_type'      => $attendee_object,
 					'meta_key'       => $attendee_order_key,
 					'meta_value'     => $this->order_id,
 					'posts_per_page' => - 1,
-				)
+				]
 			);
 
 			foreach ( $attendees as $i ) {
