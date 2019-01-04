@@ -10,7 +10,7 @@
  * Author URI:        http://m.tri.be/1971
  * License:           GPL version 3 or any later version
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain:       tribe-ext-extension-template
+ * Text Domain:       tribe-ext-woo-order-templates
  *
  *     This plugin is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ if ( ! defined( __NAMESPACE__ . '\NS' ) ) {
 
 if ( ! defined( NS . 'PLUGIN_TEXT_DOMAIN' ) ) {
 	// `Tribe\Extensions\ETWooOrderDetails\PLUGIN_TEXT_DOMAIN` is defined
-	define( NS . 'PLUGIN_TEXT_DOMAIN', 'tribe-ext-extension-template' );
+	define( NS . 'PLUGIN_TEXT_DOMAIN', 'tribe-ext-woo-order-templates' );
 }
 
 // Do not load unless Tribe Common is fully loaded and our class does not yet exist.
@@ -83,7 +83,7 @@ if (
 		 */
 		public function init() {
 			// Load plugin textdomain
-			// Don't forget to generate the 'languages/tribe-ext-extension-template.pot' file
+			// Don't forget to generate the 'languages/tribe-ext-woo-order-templates.pot' file
 			load_plugin_textdomain( PLUGIN_TEXT_DOMAIN, false, basename( dirname( __FILE__ ) ) . '/languages/' );
 
 			if ( ! $this->php_version_check() ) {
