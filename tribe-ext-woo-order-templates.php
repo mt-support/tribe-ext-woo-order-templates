@@ -75,7 +75,8 @@ if (
 		 */
 		public function construct() {
 			$this->add_required_plugin( 'Tribe__Tickets__Main' );
-			$this->add_required_plugin( 'Tribe__Tickets_Plus__Main' );
+			// ET+ 4.5.6 was latest mention of changes to accommodate WooCommerce 3.x
+			$this->add_required_plugin( 'Tribe__Tickets_Plus__Main', '4.5.6' );
 		}
 
 		/**
