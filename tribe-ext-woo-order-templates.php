@@ -25,6 +25,7 @@
 
 namespace Tribe\Extensions\ETWooOrderDetails;
 
+use Tribe__Autoloader;
 use Tribe__Dependency;
 use Tribe__Extension;
 
@@ -50,6 +51,11 @@ if (
 	 * Extension main class, class begins loading on init() function.
 	 */
 	class Main extends Tribe__Extension {
+
+		/**
+		 * @var Tribe__Autoloader
+		 */
+		private $class_loader;
 
 		/**
 		 * Is Events Calendar PRO active. If yes, we will add some extra functionality.
@@ -105,11 +111,17 @@ if (
 		 */
 		public function init() {
 			// Load plugin textdomain
+			// Don't forget to generate the 'languages/tribe-ext-extension-template.pot' file
 			load_plugin_textdomain( PLUGIN_TEXT_DOMAIN, false, basename( dirname( __FILE__ ) ) . '/languages/' );
 
 			if ( ! $this->php_version_check() ) {
 				return;
 			}
+
+			$this->class_loader();
+
+			// Insert filters and hooks here
+			add_filter( 'thing_we_are_filtering', [ $this, 'my_custom_function' ] );
 		}
 
 		/**
@@ -142,6 +154,28 @@ if (
 			}
 
 			return true;
+		}
+
+		/**
+		 * Use Tribe Autoloader for all class files within this namespace in the 'src' directory.
+		 *
+		 * TODO: Delete this method and its usage throughout this file if there is no `src` directory, such as if there are no settings being added to the admin UI.
+		 *
+		 * @return Tribe__Autoloader
+		 */
+		public function class_loader() {
+			if ( empty( $this->class_loader ) ) {
+				$this->class_loader = new Tribe__Autoloader;
+				$this->class_loader->set_dir_separator( '\\' );
+				$this->class_loader->register_prefix(
+					NS,
+					__DIR__ . DIRECTORY_SEPARATOR . 'src'
+				);
+			}
+
+			$this->class_loader->register_autoloader();
+
+			return $this->class_loader;
 		}
 
 	} // end class
