@@ -94,11 +94,11 @@ if (
 
 			require_once dirname( __FILE__ ) . '/src/functions/general.php';
 
-			add_action( 'woocommerce_order_item_meta_start', array( $this, 'woocommerce_echo_event_info' ), 100, 4 );
+			add_action( 'woocommerce_order_item_meta_start', [ $this, 'woocommerce_echo_event_info' ], 100, 4 );
 
 			// Hide the event title that gets added by Community Tickets, to prevent duplicates.
 			if ( class_exists( 'Tribe__Events__Community__Tickets__Main' ) ) {
-				remove_action( 'woocommerce_order_item_meta_start', array( Tribe__Events__Community__Tickets__Main::instance(), 'add_order_item_details' ), 10 );
+				remove_action( 'woocommerce_order_item_meta_start', [ Tribe__Events__Community__Tickets__Main::instance(), 'add_order_item_details' ], 10 );
 			}
 		}
 
