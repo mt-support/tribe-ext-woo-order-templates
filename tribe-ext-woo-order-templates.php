@@ -245,7 +245,7 @@ if (
 				$table_columns[] = array(
 					sprintf(
 						'<strong class="tribe-attendee-meta-heading">%1$s</strong>',
-						esc_html_x( 'Ticket ID', 'tribe-extension', 'Attendee meta table.' )
+						esc_html_x( 'Ticket ID', 'Attendee meta table.', PLUGIN_TEXT_DOMAIN )
 					),
 					sprintf(
 						'<strong class="tribe-attendee-meta-heading">%1$s</strong>',
@@ -264,7 +264,7 @@ if (
 				}
 
 				$table_columns[] = array(
-					esc_html_x( 'Security Code', 'tribe-extension', 'Attendee meta table.' ),
+					esc_html_x( 'Security Code', 'Attendee meta table.', PLUGIN_TEXT_DOMAIN ),
 					esc_html( $attendee['security_code'] ),
 				);
 
