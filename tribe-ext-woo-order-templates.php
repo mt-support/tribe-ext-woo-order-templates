@@ -95,7 +95,7 @@ if (
 
 			require_once dirname( __FILE__ ) . '/src/functions/general.php';
 
-			add_action( 'woocommerce_order_item_meta_start', [ $this, 'woocommerce_echo_event_info' ], 100, 4 );
+			add_action( 'woocommerce_order_item_meta_start', [ $this, 'woocommerce_echo_event_info' ], 100, 3 );
 
 			// Hide the event title that gets added by Community Tickets, to prevent duplicates
 			if ( class_exists( 'Tribe__Events__Community__Tickets__Main' ) ) {
@@ -161,7 +161,7 @@ if (
 		 * @see action woocommerce_order_item_meta_start
 		 * @see Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_event_for_ticket()
 		 */
-		public function woocommerce_echo_event_info( $item_id, $item, $order, $plain_text = '' ) {
+		public function woocommerce_echo_event_info( $item_id, $item, $order ) {
 			$wootix       = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
 			$order_status = $order->get_status();
 			$item_data    = $item->get_data();
