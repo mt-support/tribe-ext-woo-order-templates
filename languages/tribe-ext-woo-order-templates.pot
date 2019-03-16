@@ -4,8 +4,8 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Tickets Plus Extension: Enhance Woo Order "
 "Templates\n"
-"POT-Creation-Date: 2019-01-04 14:28-0600\n"
-"PO-Revision-Date: 2019-01-04 14:27-0600\n"
+"POT-Creation-Date: 2019-03-16 01:13-0500\n"
+"PO-Revision-Date: 2019-03-16 01:13-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,6 +22,13 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
+#: src/functions/general.php:29
+#, php-format
+msgid ""
+"The %s function requires PHP version 5.6 or newer to work. Please contact "
+"your website host and inquire about updating PHP."
+msgstr ""
+
 #: tribe-ext-woo-order-templates.php:123
 #, php-format
 msgid ""
@@ -29,12 +36,12 @@ msgid ""
 "host and inquire about updating PHP."
 msgstr ""
 
-#: tribe-ext-woo-order-templates.php:249
+#: tribe-ext-woo-order-templates.php:265
 msgctxt "Attendee meta table."
 msgid "Ticket ID"
 msgstr ""
 
-#: tribe-ext-woo-order-templates.php:268
+#: tribe-ext-woo-order-templates.php:284
 msgctxt "Attendee meta table."
 msgid "Security Code"
 msgstr ""
@@ -52,7 +59,7 @@ msgstr ""
 #. Description of the plugin/theme
 msgid ""
 "Adds event and attendee information to the WooCommerce order pages, "
-"including emails and the checkout screen."
+"including emails and displaying order details."
 msgstr ""
 
 #. Author of the plugin/theme
