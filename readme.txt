@@ -9,7 +9,7 @@ Stable tag: 1.0.2
 License: GPL version 3 or any later version
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Adds event and attendee information to the WooCommerce order pages, including emails and the checkout screen.
+Adds event and attendee information to the WooCommerce order pages, including emails and displaying order details.
 
 == Installation ==
 

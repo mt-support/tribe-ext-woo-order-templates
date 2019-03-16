@@ -3,7 +3,7 @@
  * Plugin Name:       Event Tickets Plus Extension: Enhance Woo Order Templates
  * Plugin URI:        https://theeventscalendar.com/extensions/add-event-and-attendee-information-to-woocommerce-order-details/
  * GitHub Plugin URI: https://github.com/mt-support/tribe-ext-woo-order-templates
- * Description:       Adds event and attendee information to the WooCommerce order pages, including emails and the checkout screen.
+ * Description:       Adds event and attendee information to the WooCommerce order pages, including emails and displaying order details.
  * Version:           1.0.2
  * Extension Class:   tribe\extensions\et_woo_order_details\Main
  * Author:            Modern Tribe, Inc.
