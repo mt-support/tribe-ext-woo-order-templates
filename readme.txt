@@ -35,6 +35,7 @@ We're always interested in your feedback and our [premium forums](https://theeve
 
 = [1.0.2] 2019-03-18 =
 
+* Enhancement - Add Venue name to the event data
 * Fix - Added missing .pot file for translators
 * Fix - Corrected context for multiple translatable strings (props @zArubaru on GitHub) [120448]
 * Fix - Corrected the Extension article link

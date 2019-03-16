@@ -189,9 +189,10 @@ if (
 				&& class_exists( 'Tribe__Events__Main' )
 				&& Tribe__Events__Main::POSTTYPE === $event->post_type
 			) {
-				$event_time    = tribe_events_event_schedule_details( $event, '<em>', '</em>' );
-				$event_address = tribe_get_full_address( $event );
-				$event_details = [];
+				$event_time       = tribe_events_event_schedule_details( $event, '<em>', '</em>' );
+				$event_venue_name = tribe_get_venue( $event );
+				$event_address    = tribe_get_full_address( $event );
+				$event_details    = [];
 
 				// Output event title in same format as Community Tickets.
 				$event_details[] = sprintf(
@@ -203,9 +204,15 @@ if (
 				if ( ! empty( $event_time ) ) {
 					$event_details[] = $event_time;
 				}
+
+				if ( ! empty( $event_venue_name ) ) {
+					$event_details[] = $event_venue_name;
+				}
+
 				if ( ! empty( $event_address ) ) {
 					$event_details[] = $event_address;
 				}
+
 				printf(
 					'<div class="tribe-event-details">%1$s</div>',
 					implode( $event_details, '<br />' )
