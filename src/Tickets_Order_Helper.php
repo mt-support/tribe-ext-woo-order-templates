@@ -42,12 +42,6 @@ class Tickets_Order_Helper {
 		$this->set_provider_classname();
 	}
 
-	/*
-	 * Get the ticket provider for a given order
-	 *
-	 * @return string|null
-	 */
-
 	/**
 	 * Gets the ticket provider classname
 	 *
@@ -57,6 +51,11 @@ class Tickets_Order_Helper {
 		return $this->provider_classname;
 	}
 
+	/*
+	 * Get the ticket provider for a given order
+	 *
+	 * @return string|null
+	 */
 	protected function set_provider_classname() {
 		$ticket_modules = Tribe__Tickets__Tickets::modules();
 		$class_name     = null;

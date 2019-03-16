@@ -3,7 +3,7 @@ Contributors: ModernTribe
 Donate link: http://m.tri.be/29
 Tags: events, calendar, tickets, woocommerce
 Requires at least: 4.5
-Tested up to: 5.0.2
+Tested up to: 5.1.1
 Requires PHP: 5.6
 Stable tag: 1.0.2
 License: GPL version 3 or any later version
@@ -31,7 +31,7 @@ We're always interested in your feedback and our [premium forums](https://theeve
 
 == Changelog ==
 
-= [1.0.2] 2019-01-07 =
+= [1.0.2] 2019-03-18 =
 
 * Fix - Added missing .pot file for translators
 * Fix - Corrected context for multiple translatable strings (props @zArubaru on GitHub) [120448]
