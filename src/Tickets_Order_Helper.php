@@ -157,7 +157,11 @@ class Tickets_Order_Helper {
 			$attendee_event_key = tribe_call_private_method( $this->provider_instance, 'get_attendee_event_key', $class_reflection );
 			$attendee_object    = tribe_call_private_method( $this->provider_instance, 'get_attendee_object', $class_reflection );
 
-			if ( empty( $attendee_order_key ) || empty( $attendee_event_key ) || empty( $attendee_object ) ) {
+			if (
+				empty( $attendee_order_key )
+				|| empty( $attendee_event_key )
+				|| empty( $attendee_object )
+			) {
 				return $event_ids;
 			}
 
@@ -171,7 +175,8 @@ class Tickets_Order_Helper {
 			);
 
 			foreach ( $attendees as $i ) {
-				$id              = $this->provider_instance->get_event_id_from_attendee_id( $i->ID );
+				$id = $this->provider_instance->get_event_id_from_attendee_id( $i->ID );
+
 				$event_ids [$id] = $id;
 			}
 		}
