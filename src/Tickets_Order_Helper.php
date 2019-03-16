@@ -153,9 +153,9 @@ class Tickets_Order_Helper {
 			}
 		} elseif ( ! empty( $this->provider_classname ) ) {
 			$class_reflection   = new ReflectionClass( $this->provider_instance );
-			$attendee_order_key = tribe_call_private_method( $this->provider_instance, 'get_attendee_order_key', $class_reflection );
-			$attendee_event_key = tribe_call_private_method( $this->provider_instance, 'get_attendee_event_key', $class_reflection );
-			$attendee_object    = tribe_call_private_method( $this->provider_instance, 'get_attendee_object', $class_reflection );
+			$attendee_order_key = tribe_call_non_public_method( $this->provider_instance, 'get_attendee_order_key', $class_reflection );
+			$attendee_event_key = tribe_call_non_public_method( $this->provider_instance, 'get_attendee_event_key', $class_reflection );
+			$attendee_object    = tribe_call_non_public_method( $this->provider_instance, 'get_attendee_object', $class_reflection );
 
 			if (
 				empty( $attendee_order_key )

@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-if ( ! function_exists( 'tribe_call_private_method' ) ) {
+if ( ! function_exists( 'tribe_call_non_public_method' ) ) {
 	/**
 	 * Calls a private/protected method in any class
 	 *
@@ -12,7 +12,7 @@ if ( ! function_exists( 'tribe_call_private_method' ) ) {
 	 * be accessed, and can change functionality on any update.
 	 *
 	 * To call Tribe__Class::instance()->set_something( $var1, $var2 ) do this:
-	 * tribe_call_private_method(
+	 * tribe_call_non_public_method(
 	 *      Tribe__Class::instance(),
 	 *      'set_something',
 	 *      [ $var1, $var2 ]
@@ -24,7 +24,7 @@ if ( ! function_exists( 'tribe_call_private_method' ) ) {
 	 *
 	 * @return mixed|exception Returns method or exception on PHP 5.2
 	 */
-	function tribe_call_private_method( $instance, $method, $args = [] ) {
+	function tribe_call_non_public_method( $instance, $method, $args = [] ) {
 		if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
 			$exception = new Exception( 'This function requires PHP 5.6 or newer.' );
 			_doing_it_wrong( __FUNCTION__, $exception->getMessage(), 'N/A' );
