@@ -26,7 +26,7 @@ if ( ! function_exists( 'tribe_call_non_public_method' ) ) {
 	 */
 	function tribe_call_non_public_method( $instance, $method, $args = [] ) {
 		if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
-			$exception = new Exception( 'This function requires PHP 5.6 or newer.' );
+			$exception = new Exception( sprintf( __( 'The %s function requires PHP version 5.6 or newer to work. Please contact your website host and inquire about updating PHP.', PLUGIN_TEXT_DOMAIN ), __FUNCTION__ ) );
 			_doing_it_wrong( __FUNCTION__, $exception->getMessage(), 'N/A' );
 
 			return $exception;
