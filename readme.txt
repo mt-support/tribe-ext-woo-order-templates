@@ -41,6 +41,7 @@ We're always interested in your feedback and our [premium forums](https://theeve
 * Fix - Avoid fatal error when The Events Calendar is not active (props to Alejandro in our Help Desk) [120234]
 * Fix - Only output this extension's CSS and attendee information for ticket-type WooCommerce Products (props to Mario Acunto in our forums) [102266]
 * Tweak - Now requires PHP 5.6+
+* Tweak - Now requires WooCommerce 3.0+
 * Tweak - Now requires Event Tickets Plus 4.5.6+ (from October 18, 2017)
 * Tweak - Added GitHub Updater compatibility
 * Tweak - Changed from GPLv2+ to GPLv3+
