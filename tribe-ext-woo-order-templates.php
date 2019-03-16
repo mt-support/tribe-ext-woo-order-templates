@@ -5,7 +5,7 @@
  * GitHub Plugin URI: https://github.com/mt-support/tribe-ext-woo-order-templates
  * Description:       Adds event and attendee information to the WooCommerce order pages, including emails and the checkout screen.
  * Version:           1.0.2
- * Extension Class:   Tribe\Extensions\ETWooOrderDetails\Main
+ * Extension Class:   tribe\extensions\et_woo_order_details\Main
  * Author:            Modern Tribe, Inc.
  * Author URI:        http://m.tri.be/1971
  * License:           GPL version 3 or any later version
@@ -23,7 +23,7 @@
  *     GNU General Public License for more details.
  */
 
-namespace Tribe\Extensions\ETWooOrderDetails;
+namespace tribe\extensions\et_woo_order_details;
 
 use Tribe__Autoloader;
 use Tribe__Events__Community__Tickets__Main;
@@ -44,7 +44,7 @@ if ( ! defined( __NAMESPACE__ . '\NS' ) ) {
 }
 
 if ( ! defined( NS . 'PLUGIN_TEXT_DOMAIN' ) ) {
-	// `Tribe\Extensions\ETWooOrderDetails\PLUGIN_TEXT_DOMAIN` is defined
+	// `tribe\extensions\et_woo_order_details\PLUGIN_TEXT_DOMAIN` is defined
 	define( NS . 'PLUGIN_TEXT_DOMAIN', 'tribe-ext-woo-order-templates' );
 }
 
