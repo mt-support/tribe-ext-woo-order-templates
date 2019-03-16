@@ -1,6 +1,6 @@
 <?php
 
-namespace Tribe\Extensions\ETWooOrderDetails;
+namespace tribe\extensions\et_woo_order_details;
 
 use ReflectionClass;
 use Tribe__Tickets__RSVP;
