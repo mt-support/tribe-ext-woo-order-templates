@@ -2,6 +2,7 @@
 
 namespace Tribe\Extensions\ETWooOrderDetails;
 
+use Exception;
 use ReflectionClass;
 use Tribe__Tickets__RSVP;
 use Tribe__Tickets__Tickets;
@@ -152,7 +153,16 @@ class Tickets_Order_Helper {
 				$event_ids[$id] = $id;
 			}
 		} elseif ( ! empty( $this->provider_classname ) ) {
-			$class_reflection   = new ReflectionClass( $this->provider_instance );
+			try {
+				$class_reflection = new ReflectionClass( $this->provider_instance );
+			}
+			catch ( Exception $exception ) {
+				$class_reflection = false;
+			}
+
+			if ( empty( $class_reflection ) ) {
+				return $event_ids;
+			}
 
 			$attendee_helper = new Attendee_Helper();
 
