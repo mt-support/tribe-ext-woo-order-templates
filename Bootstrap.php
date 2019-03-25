@@ -85,6 +85,10 @@ if (
 				return;
 			}
 
+			if ( ! $this->is_woocommerce_active() ) {
+				return;
+			}
+
 			$this->class_loader();
 
 			add_action( 'woocommerce_order_item_meta_start', [ new Main(), 'woocommerce_echo_event_info' ], 100, 3 );
@@ -125,6 +129,21 @@ if (
 			}
 
 			return true;
+		}
+
+		/**
+		 * Check if WooCommerce is activated.
+		 *
+		 * @link https://docs.woocommerce.com/document/query-whether-woocommerce-is-activated/
+		 *
+		 * @return bool
+		 */
+		private function is_woocommerce_active() {
+			if ( class_exists( 'WooCommerce' ) ) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 
 		/**

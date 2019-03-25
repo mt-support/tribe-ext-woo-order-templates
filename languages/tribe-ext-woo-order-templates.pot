@@ -4,8 +4,8 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Tickets Plus Extension: Enhance Woo Order "
 "Templates\n"
-"POT-Creation-Date: 2019-03-25 17:30-0500\n"
-"PO-Revision-Date: 2019-03-25 17:30-0500\n"
+"POT-Creation-Date: 2019-03-25 17:48-0500\n"
+"PO-Revision-Date: 2019-03-25 17:48-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,19 +22,19 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: Bootstrap.php:115
+#: Bootstrap.php:119
 #, php-format
 msgid ""
 "%s requires PHP version %s or newer to work. Please contact your website "
 "host and inquire about updating PHP."
 msgstr ""
 
-#: src/Main.php:137
+#: src/Main.php:136
 msgctxt "Attendee meta table."
 msgid "Ticket ID"
 msgstr ""
 
-#: src/Main.php:156
+#: src/Main.php:155
 msgctxt "Attendee meta table."
 msgid "Security Code"
 msgstr ""

@@ -43,7 +43,6 @@ class Main {
 
 		// Generate tickets early so we can get attendee meta.
 		// Note, if the default order status is one that does affect stock, no tickets will be generated.
-		// Since Event Tickets Plus is not yet fully Woo 3.0 compatible, suppress notices.
 		$wootix->generate_tickets( $order->get_id() );
 
 		// This is either true or a WP_Post, such as for any enabled post type (such as a ticket on a Page), not just for Tribe Events.
