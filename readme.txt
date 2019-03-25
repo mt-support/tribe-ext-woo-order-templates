@@ -5,7 +5,7 @@ Tags: events, calendar, tickets, woocommerce
 Requires at least: 4.5
 Tested up to: 5.1.1
 WC requires at least: 3.0
-WC tested up to: 3.5.6
+WC tested up to: 3.5.7
 Requires PHP: 5.6
 Stable tag: 1.0.2
 License: GPL version 3 or any later version
@@ -33,7 +33,7 @@ We're always interested in your feedback and our [premium forums](https://theeve
 
 == Changelog ==
 
-= [1.0.2] 2019-03-18 =
+= [1.0.2] 2019-03-27 =
 
 * Enhancement - Add Venue name to the event data
 * Fix - Added missing .pot file for translators
