@@ -4,8 +4,8 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Tickets Plus Extension: Enhance Woo Order "
 "Templates\n"
-"POT-Creation-Date: 2019-03-16 01:13-0500\n"
-"PO-Revision-Date: 2019-03-16 01:13-0500\n"
+"POT-Creation-Date: 2019-03-25 17:26-0500\n"
+"PO-Revision-Date: 2019-03-25 17:26-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,28 +22,21 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: src/functions/general.php:29
-#, php-format
-msgid ""
-"The %s function requires PHP version 5.6 or newer to work. Please contact "
-"your website host and inquire about updating PHP."
-msgstr ""
-
-#: tribe-ext-woo-order-templates.php:123
-#, php-format
-msgid ""
-"%s requires PHP version %s or newer to work. Please contact your website "
-"host and inquire about updating PHP."
-msgstr ""
-
-#: tribe-ext-woo-order-templates.php:265
+#: src/Main.php:137
 msgctxt "Attendee meta table."
 msgid "Ticket ID"
 msgstr ""
 
-#: tribe-ext-woo-order-templates.php:284
+#: src/Main.php:156
 msgctxt "Attendee meta table."
 msgid "Security Code"
+msgstr ""
+
+#: tribe-ext-woo-order-templates.php:115
+#, php-format
+msgid ""
+"%s requires PHP version %s or newer to work. Please contact your website "
+"host and inquire about updating PHP."
 msgstr ""
 
 #. Plugin Name of the plugin/theme
