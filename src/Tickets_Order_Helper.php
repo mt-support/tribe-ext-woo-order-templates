@@ -52,8 +52,8 @@ class Tickets_Order_Helper {
 		return $this->provider_classname;
 	}
 
-	/*
-	 * Get the ticket provider for a given order
+	/**
+	 * Get the ticket provider for a given order.
 	 *
 	 * @return string|null
 	 */
@@ -91,10 +91,10 @@ class Tickets_Order_Helper {
 		return $this->provider_instance;
 	}
 
-	/*
-	 * Gets the attendees for the order
+	/**
+	 * Gets the attendees for the order.
 	 *
-	 * @return array List of attendees
+	 * @return array List of attendees.
 	 */
 	public function get_attendees() {
 		$order_attendees = [];
@@ -136,10 +136,10 @@ class Tickets_Order_Helper {
 		return $order_attendees;
 	}
 
-	/*
-	 * Get the events IDs for the order
+	/**
+	 * Get the events IDs for the order.
 	 *
-	 * @return array All event IDs found, can be empty
+	 * @return array All event IDs found (can be empty).
 	 */
 	public function get_event_ids() {
 		$event_ids = [];
