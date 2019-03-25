@@ -7,8 +7,8 @@ use Tribe__Simple_Table;
 use Tribe__Tickets_Plus__Commerce__WooCommerce__Main;
 use Tribe__Tickets_Plus__Main;
 use Tribe__Tickets_Plus__Meta;
-use WC_Order_Item_Product;
 use WC_Order;
+use WC_Order_Item_Product;
 use WP_Post;
 
 /**
@@ -37,9 +37,9 @@ class Main {
 			return;
 		}
 
-		$wootix       = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
+		$wootix = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
 
-		$item_data    = $item->get_data();
+		$item_data = $item->get_data();
 
 		// Generate tickets early so we can get attendee meta.
 		// Note, if the default order status is one that does affect stock, no tickets will be generated.
@@ -121,7 +121,7 @@ class Main {
 	protected function echo_attendee_meta( $order_id, $ticket_id = null ) {
 		$order_helper = new Tickets_Order_Helper( $order_id );
 
-		$attendees    = $order_helper->get_attendees();
+		$attendees = $order_helper->get_attendees();
 
 		foreach ( $attendees as $attendee ) {
 			// Skip attendees that are not for this ticket type.
