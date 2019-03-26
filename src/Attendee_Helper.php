@@ -13,7 +13,7 @@ class Attendee_Helper extends Tribe__Tickets__Tickets {
 	/**
 	 * Returns the meta key used to link attendees with orders.
 	 *
-	 * @see \Tribe__Tickets__Tickets::get_attendee_order_key()
+	 * @see Tribe__Tickets__Tickets::get_attendee_order_key()
 	 *
 	 * @param  ReflectionClass $provider_class The ticket provider's class.
 	 *
@@ -26,7 +26,7 @@ class Attendee_Helper extends Tribe__Tickets__Tickets {
 	/**
 	 * Returns the meta key used to link attendees with the base event.
 	 *
-	 * @see \Tribe__Tickets__Tickets::get_attendee_event_key()
+	 * @see Tribe__Tickets__Tickets::get_attendee_event_key()
 	 *
 	 * @param  ReflectionClass $provider_class The ticket provider's class.
 	 *
@@ -39,7 +39,7 @@ class Attendee_Helper extends Tribe__Tickets__Tickets {
 	/**
 	 * Returns the attendee object post type.
 	 *
-	 * @see \Tribe__Tickets__Tickets::get_attendee_object()
+	 * @see Tribe__Tickets__Tickets::get_attendee_object()
 	 *
 	 * @param  ReflectionClass $provider_class The ticket provider's class.
 	 *
@@ -48,4 +48,4 @@ class Attendee_Helper extends Tribe__Tickets__Tickets {
 	public function safely_get_attendee_object( $provider_class ) {
 		return $this->get_attendee_object( $provider_class );
 	}
-} // end class
+}

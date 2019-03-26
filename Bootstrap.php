@@ -58,13 +58,6 @@ if (
 		private $class_loader;
 
 		/**
-		 * Indicates whether the attendee stylesheet has been output or not
-		 *
-		 * @var bool
-		 */
-		protected $woo_attendee_styles_output = false;
-
-		/**
 		 * Setup the Extension's properties.
 		 *
 		 * This always executes even if the required plugins are not present.
@@ -139,11 +132,7 @@ if (
 		 * @return bool
 		 */
 		private function is_woocommerce_active() {
-			if ( class_exists( 'WooCommerce' ) ) {
-				return true;
-			} else {
-				return false;
-			}
+			return class_exists( 'WooCommerce' );
 		}
 
 		/**
@@ -165,5 +154,5 @@ if (
 
 			return $this->class_loader;
 		}
-	} // end class
-} // end if class_exists check
+	}
+}

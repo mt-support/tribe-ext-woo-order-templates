@@ -33,7 +33,7 @@ We're always interested in your feedback and our [premium forums](https://theeve
 
 == Changelog ==
 
-= [1.0.2] 2019-03-27 =
+= [1.0.2] 2019-03-25 =
 
 * Enhancement - Add Venue name to the event data
 * Fix - Added missing .pot file for translators

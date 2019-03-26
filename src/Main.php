@@ -21,7 +21,7 @@ class Main {
 	 *
 	 * @var bool
 	 */
-	protected $woo_attendee_styles_output = false;
+	private $woo_attendee_styles_output = false;
 
 	/**
 	 * Echoes the attendee meta when attached to relevant WooCommerce action.
@@ -209,4 +209,4 @@ class Main {
 
 		return $output;
 	}
-} // end class
+}
