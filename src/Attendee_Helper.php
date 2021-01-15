@@ -3,12 +3,12 @@
 namespace Tribe\Extensions\ET_Woo_Order_Details;
 
 use ReflectionClass;
-use Tribe__Tickets__Tickets;
+use Tribe__Tickets_Plus__Commerce__WooCommerce__Main;
 
 /**
  * Extend class from Event Tickets to expose non-public methods to this extension.
  */
-class Attendee_Helper extends Tribe__Tickets__Tickets {
+class Attendee_Helper extends Tribe__Tickets_Plus__Commerce__WooCommerce__Main {
 
 	/**
 	 * Returns the meta key used to link attendees with orders.
