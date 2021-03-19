@@ -11,6 +11,25 @@ use Tribe__Tickets__Tickets;
 class Attendee_Helper extends Tribe__Tickets__Tickets {
 
 	/**
+	 * Class constructor
+	 */
+	public function __construct() {
+		add_filter( 'tribe_tickets_get_modules', [ $this, 'remove_as_active_module' ] );
+	}
+
+	/**
+	 * @param $active_modules
+	 *
+	 * @return mixed
+	 */
+	public function remove_as_active_module( $active_modules ) {
+
+		unset( $active_modules[ $this->class_name ] );
+
+		return $active_modules;
+	}
+
+	/**
 	 * Returns the meta key used to link attendees with orders.
 	 *
 	 * @see Tribe__Tickets__Tickets::get_attendee_order_key()
