@@ -248,4 +248,76 @@ class Main {
 		</td>
 		<?php
 	}
+
+	/**
+	 * Add attendee data to Order Item view.
+	 *
+	 * @since TBD
+	 *
+	 * @param string $item_id
+	 * @param \WC_Order_Item $item
+	 * @param \WC_Product $product
+	 */
+	public function add_attendee_data_for_order_item( $item_id, $item, $product ) {
+
+		/** @var Tribe__Tickets_Plus__Commerce__WooCommerce__Main $woo_provider */
+		$woo_provider = tribe( 'tickets-plus.commerce.woo' );
+
+		$ticket_id = $product->get_id();
+		$attendees = $woo_provider->get_attendees_by_id( $item->get_order_id() );
+
+		foreach ( $attendees as $attendee ) {
+			// Skip attendees that are not for this ticket type.
+			if ( ! empty( $ticket_id ) && $ticket_id != $attendee['product_id'] ) {
+				continue;
+			}
+
+			$table_columns = [];
+
+			$table_columns[] = [
+				sprintf(
+					'<strong class="tribe-attendee-meta-heading">%1$s</strong>',
+					esc_html_x( 'Ticket ID', 'Attendee meta table.', PLUGIN_TEXT_DOMAIN )
+				),
+				sprintf(
+					'<strong class="tribe-attendee-meta-heading">%1$s</strong>',
+					esc_html( $attendee['ticket_id'] )
+				),
+			];
+
+			$table_columns[] = [
+				esc_html_x( 'Name', 'Attendee meta table.', PLUGIN_TEXT_DOMAIN ),
+				esc_html( $attendee[ 'holder_name' ] ),
+			];
+
+			$table_columns[] = [
+				esc_html_x( 'Email', 'Attendee meta table.', PLUGIN_TEXT_DOMAIN ),
+				esc_html( $attendee[ 'holder_email' ] ),
+			];
+
+			$fields = $this->get_attendee_meta( $attendee['product_id'], $attendee['qr_ticket_id'] );
+
+			if ( ! empty( $fields ) ) {
+				foreach ( $fields as $field ) {
+					$table_columns[] = [
+						esc_html( $field['label'] ),
+						esc_html( $field['value'] ),
+					];
+				}
+			}
+
+			$table_columns[] = [
+				esc_html_x( 'Security Code', 'Attendee meta table.', PLUGIN_TEXT_DOMAIN ),
+				esc_html( $attendee['security_code'] ),
+			];
+
+			$table                        = new Tribe__Simple_Table( $table_columns );
+			$table->html_escape_td_values = false;
+			$table->table_attributes      = [
+				'class' => 'tribe-attendee-meta',
+			];
+
+			echo $table->output_table();
+		}
+	}
 }
