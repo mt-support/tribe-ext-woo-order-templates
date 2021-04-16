@@ -84,7 +84,10 @@ if (
 
 			$this->class_loader();
 
-			add_action( 'woocommerce_order_item_meta_start', [ new Main(), 'woocommerce_echo_event_info' ], 100, 3 );
+			$main_class = new Main();
+			add_action( 'woocommerce_order_item_meta_start', [ $main_class, 'woocommerce_echo_event_info' ], 100, 3 );
+			add_action( 'woocommerce_admin_order_item_headers', [ $main_class, 'add_event_title_header' ] );
+			add_action( 'woocommerce_admin_order_item_values', [ $main_class, 'add_event_title_for_order_item' ], 10, 3 );
 
 			// Hide the event title that gets added by Community Tickets, to prevent duplicates
 			if ( class_exists( 'Tribe__Events__Community__Tickets__Main' ) ) {

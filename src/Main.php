@@ -207,4 +207,45 @@ class Main {
 
 		return $output;
 	}
+
+	/**
+	 * Adds the Event Title column header on WooCommerce Order Items table.
+	 *
+	 * @since TBD
+	 */
+	public function add_event_title_header() {
+		?>
+		<th class="item_event sortable" data-sort="string-ins">
+			<?php esc_html_e( 'Event', PLUGIN_TEXT_DOMAIN ); ?>
+		</th>
+		<?php
+	}
+
+	/**
+	 * Add Event Link for Order Items.
+	 *
+	 * @since TBD
+	 *
+	 * @param \WC_Product $product
+	 * @param \WC_Order_Item_Product $item
+	 * @param string $item_id
+	 */
+	public function add_event_title_for_order_item( $product, $item, $item_id ) {
+
+		if ( ! is_object( $product ) ) {
+			return;
+		}
+
+		$event_id   = $product->get_meta( '_tribe_wooticket_for_event' );
+		$event_post = ! empty( $event_id ) ? get_post( $event_id ) : '' ;
+		$event      = ! empty( $event_post ) ? $event_post->post_title : '';
+		$schedule   = function_exists( 'tribe_events_event_schedule_details' ) ? tribe_events_event_schedule_details( $event_post ) : '';
+		$link       = sprintf( '<a target="_blank" rel="noopener nofollow" href="%s">%s</a> (%s)', get_permalink( $event_post ), esc_html( $event ), $schedule );
+
+		?>
+		<td class="item_event" width="15%" data-sort-value="<?php echo esc_attr( $event ) ?>">
+			<?php echo $link; ?>
+		</td>
+		<?php
+	}
 }
