@@ -320,4 +320,23 @@ class Main {
 			echo $table->output_table();
 		}
 	}
+
+	/**
+	 * Add inline styles for Attendee Table for Order Items.
+	 *
+	 * @since TBD
+	 */
+	function admin_order_table_styles() {
+
+		$custom_css = '
+                table.tribe-attendee-meta td:first-child {
+	                padding-left: 0px !important;
+                }
+                table.tribe-attendee-meta td {
+	                padding: 5px 10px !important;
+                }
+                ';
+		wp_add_inline_style( 'event-tickets-admin-css', $custom_css );
+	}
+
 }

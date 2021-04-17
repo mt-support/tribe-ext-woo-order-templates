@@ -89,6 +89,7 @@ if (
 			add_action( 'woocommerce_admin_order_item_headers', [ $main_class, 'add_event_title_header' ] );
 			add_action( 'woocommerce_admin_order_item_values', [ $main_class, 'add_event_title_for_order_item' ], 10, 3 );
 			add_action( 'woocommerce_before_order_itemmeta', [ $main_class, 'add_attendee_data_for_order_item' ], 10, 3 );
+			add_action( 'admin_enqueue_scripts', [ new Main(), 'admin_order_table_styles' ], 99 );
 			// Hide the event title that gets added by Community Tickets, to prevent duplicates
 			if ( class_exists( 'Tribe__Events__Community__Tickets__Main' ) ) {
 				remove_action( 'woocommerce_order_item_meta_start', [ Tribe__Events__Community__Tickets__Main::instance(), 'add_order_item_details' ], 10 );
