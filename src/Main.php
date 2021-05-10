@@ -330,7 +330,7 @@ class Main {
 
 		$custom_css = '
                 table.tribe-attendee-meta td:first-child {
-	                padding-left: 0px !important;
+	                padding-left: 0;
                 }
                 table.tribe-attendee-meta td {
 	                padding: 5px 10px !important;
