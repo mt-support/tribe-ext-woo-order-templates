@@ -37,13 +37,10 @@ class Main {
 			return;
 		}
 
-		$wootix = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
+		/** @var Tribe__Tickets_Plus__Commerce__WooCommerce__Main $woo_provider */
+		$wootix = tribe( 'tickets-plus.commerce.woo' );
 
 		$item_data = $item->get_data();
-
-		// Generate tickets early so we can get attendee meta.
-		// Note, if the default order status is one that does affect stock, no tickets will be generated.
-		$wootix->generate_tickets( $order->get_id() );
 
 		// This is either true or a WP_Post, such as for any enabled post type (such as a ticket on a Page), not just for Tribe Events.
 		$event = $wootix->get_event_for_ticket( $item_data['product_id'] );
@@ -118,9 +115,10 @@ class Main {
 	 * @param string $ticket_id The specific ticket to output attendees for.
 	 */
 	protected function echo_attendee_meta( $order_id, $ticket_id = null ) {
-		$order_helper = new Tickets_Order_Helper( $order_id );
 
-		$attendees = $order_helper->get_attendees();
+		/** @var Tribe__Tickets_Plus__Commerce__WooCommerce__Main $woo_provider */
+		$woo_provider = tribe( 'tickets-plus.commerce.woo' );
+		$attendees    = $woo_provider->get_attendees_by_id( $order_id );
 
 		foreach ( $attendees as $attendee ) {
 			// Skip attendees that are not for this ticket type.
