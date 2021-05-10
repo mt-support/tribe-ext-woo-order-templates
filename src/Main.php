@@ -37,13 +37,10 @@ class Main {
 			return;
 		}
 
-		$wootix = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
+		/** @var Tribe__Tickets_Plus__Commerce__WooCommerce__Main $woo_provider */
+		$wootix = tribe( 'tickets-plus.commerce.woo' );
 
 		$item_data = $item->get_data();
-
-		// Generate tickets early so we can get attendee meta.
-		// Note, if the default order status is one that does affect stock, no tickets will be generated.
-		$wootix->generate_tickets( $order->get_id() );
 
 		// This is either true or a WP_Post, such as for any enabled post type (such as a ticket on a Page), not just for Tribe Events.
 		$event = $wootix->get_event_for_ticket( $item_data['product_id'] );
@@ -118,9 +115,10 @@ class Main {
 	 * @param string $ticket_id The specific ticket to output attendees for.
 	 */
 	protected function echo_attendee_meta( $order_id, $ticket_id = null ) {
-		$order_helper = new Tickets_Order_Helper( $order_id );
 
-		$attendees = $order_helper->get_attendees();
+		/** @var Tribe__Tickets_Plus__Commerce__WooCommerce__Main $woo_provider */
+		$woo_provider = tribe( 'tickets-plus.commerce.woo' );
+		$attendees    = $woo_provider->get_attendees_by_id( $order_id );
 
 		foreach ( $attendees as $attendee ) {
 			// Skip attendees that are not for this ticket type.
@@ -209,4 +207,136 @@ class Main {
 
 		return $output;
 	}
+
+	/**
+	 * Adds the Event Title column header on WooCommerce Order Items table.
+	 *
+	 * @since TBD
+	 */
+	public function add_event_title_header() {
+		?>
+		<th class="item_event sortable" data-sort="string-ins">
+			<?php esc_html_e( 'Event', PLUGIN_TEXT_DOMAIN ); ?>
+		</th>
+		<?php
+	}
+
+	/**
+	 * Add Event Link for Order Items.
+	 *
+	 * @since TBD
+	 *
+	 * @param \WC_Product $product
+	 * @param \WC_Order_Item_Product $item
+	 * @param string $item_id
+	 */
+	public function add_event_title_for_order_item( $product, $item, $item_id ) {
+
+		if ( ! is_object( $product ) ) {
+			return;
+		}
+
+		$event_id   = $product->get_meta( '_tribe_wooticket_for_event' );
+		$event_post = ! empty( $event_id ) ? get_post( $event_id ) : '' ;
+		$event      = ! empty( $event_post ) ? $event_post->post_title : '';
+		$schedule   = function_exists( 'tribe_events_event_schedule_details' ) ? tribe_events_event_schedule_details( $event_post ) : '';
+		$link       = sprintf( '<a target="_blank" rel="noopener nofollow" href="%s">%s</a> (%s)', get_permalink( $event_post ), esc_html( $event ), $schedule );
+
+		?>
+		<td class="item_event" width="15%" data-sort-value="<?php echo esc_attr( $event ) ?>">
+			<?php echo $link; ?>
+		</td>
+		<?php
+	}
+
+	/**
+	 * Add attendee data to Order Item view.
+	 *
+	 * @since TBD
+	 *
+	 * @param string $item_id
+	 * @param \WC_Order_Item $item
+	 * @param \WC_Product $product
+	 */
+	public function add_attendee_data_for_order_item( $item_id, $item, $product ) {
+
+		/** @var Tribe__Tickets_Plus__Commerce__WooCommerce__Main $woo_provider */
+		$woo_provider = tribe( 'tickets-plus.commerce.woo' );
+
+		$ticket_id = $product->get_id();
+		$attendees = $woo_provider->get_attendees_by_id( $item->get_order_id() );
+
+		foreach ( $attendees as $attendee ) {
+			// Skip attendees that are not for this ticket type.
+			if ( ! empty( $ticket_id ) && $ticket_id != $attendee['product_id'] ) {
+				continue;
+			}
+
+			$table_columns = [];
+
+			$table_columns[] = [
+				sprintf(
+					'<strong class="tribe-attendee-meta-heading">%1$s</strong>',
+					esc_html_x( 'Ticket ID', 'Attendee meta table.', PLUGIN_TEXT_DOMAIN )
+				),
+				sprintf(
+					'<strong class="tribe-attendee-meta-heading">%1$s</strong>',
+					esc_html( $attendee['ticket_id'] )
+				),
+			];
+
+			$table_columns[] = [
+				esc_html_x( 'Name', 'Attendee meta table.', PLUGIN_TEXT_DOMAIN ),
+				esc_html( $attendee[ 'holder_name' ] ),
+			];
+
+			$table_columns[] = [
+				esc_html_x( 'Email', 'Attendee meta table.', PLUGIN_TEXT_DOMAIN ),
+				esc_html( $attendee[ 'holder_email' ] ),
+			];
+
+			$fields = $this->get_attendee_meta( $attendee['product_id'], $attendee['qr_ticket_id'] );
+
+			if ( ! empty( $fields ) ) {
+				foreach ( $fields as $field ) {
+					$table_columns[] = [
+						esc_html( $field['label'] ),
+						esc_html( $field['value'] ),
+					];
+				}
+			}
+
+			$table_columns[] = [
+				esc_html_x( 'Security Code', 'Attendee meta table.', PLUGIN_TEXT_DOMAIN ),
+				esc_html( $attendee['security_code'] ),
+			];
+
+			$table                        = new Tribe__Simple_Table( $table_columns );
+			$table->html_escape_td_values = false;
+			$table->table_attributes      = [
+				'class' => 'tribe-attendee-meta',
+			];
+
+			echo $table->output_table();
+		}
+	}
+
+	/**
+	 * Add inline styles for Attendee Table for Order Items.
+	 *
+	 * @since TBD
+	 */
+	function admin_order_table_styles() {
+
+		$custom_css = '
+                table.tribe-attendee-meta td:first-child {
+	                padding-left: 0 !important;
+                }
+                table.tribe-attendee-meta td {
+	                padding: 5px 10px !important;
+                }
+                ';
+		wp_add_inline_style( 'event-tickets-admin-css', $custom_css );
+	}
+
 }

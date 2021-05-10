@@ -3,11 +3,11 @@ Contributors: ModernTribe
 Donate link: http://m.tri.be/29
 Tags: events, calendar, tickets, woocommerce
 Requires at least: 4.5
-Tested up to: 5.1.1
+Tested up to: 5.7
 WC requires at least: 3.0
-WC tested up to: 3.5.7
+WC tested up to: 5.2.2
 Requires PHP: 5.6
-Stable tag: 1.0.2
+Stable tag: 1.1.0
 License: GPL version 3 or any later version
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -32,6 +32,10 @@ Please visit our [extension library](https://theeventscalendar.com/extensions/) 
 We're always interested in your feedback and our [premium forums](https://theeventscalendar.com/support-forums/) are the best place to flag any issues. Do note, however, that the degree of support we provide for extensions like this one tends to be very limited.
 
 == Changelog ==
+
+= [1.1.0] 2021-05-10 =
+* Fix - Showing fatal error on Thank you page after placing an order.
+* Enhancement - Show Event and Ticket details within the Order Edit screen for admin.
 
 = [1.0.2] 2019-03-25 =
 
