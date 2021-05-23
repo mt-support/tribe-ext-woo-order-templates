@@ -212,8 +212,15 @@ class Main {
 	 * Adds the Event Title column header on WooCommerce Order Items table.
 	 *
 	 * @since TBD
+	 *
+	 * @param WC_Order $order Order Object.
 	 */
-	public function add_event_title_header() {
+	public function add_event_title_header( $order ) {
+
+		if ( ! $this->should_render_event_column( $order ) ) {
+			return;
+		}
+
 		?>
 		<th class="item_event sortable" data-sort="string-ins">
 			<?php esc_html_e( 'Event', PLUGIN_TEXT_DOMAIN ); ?>
@@ -233,6 +240,10 @@ class Main {
 	public function add_event_title_for_order_item( $product, $item, $item_id ) {
 
 		if ( ! is_object( $product ) ) {
+			return;
+		}
+
+		if ( ! $this->should_render_event_column( $item->get_order() ) ) {
 			return;
 		}
 
@@ -259,6 +270,14 @@ class Main {
 	 * @param \WC_Product $product
 	 */
 	public function add_attendee_data_for_order_item( $item_id, $item, $product ) {
+
+		if ( ! is_object( $product ) ) {
+			return;
+		}
+
+		if ( ! $this->should_render_event_column( $item->get_order() ) ) {
+			return;
+		}
 
 		/** @var Tribe__Tickets_Plus__Commerce__WooCommerce__Main $woo_provider */
 		$woo_provider = tribe( 'tickets-plus.commerce.woo' );
@@ -337,6 +356,15 @@ class Main {
                 }
                 ';
 		wp_add_inline_style( 'event-tickets-admin-css', $custom_css );
+	}
+
+	/**
+	 * Check if we have Tickets in Order.
+	 *
+	 * @param WC_Order $order
+	 */
+	public function should_render_event_column( $order ) {
+		return (bool) $order->get_meta( '_tribe_has_tickets' );
 	}
 
 }
