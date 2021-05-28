@@ -283,13 +283,23 @@ class Main {
 		$woo_provider = tribe( 'tickets-plus.commerce.woo' );
 
 		$ticket_id = $product->get_id();
-		$attendees = $woo_provider->get_attendees_by_id( $item->get_order_id() );
+
+		$attendees_orm = tribe_attendees( $woo_provider->orm_provider );
+
+		$attendees_orm->by( 'order', $item->get_order_id() )
+					  ->by( 'ticket', $product->get_id() )
+					  ->by( 'status', [ 'publish', 'trash' ] );
+
+		$attendees = $woo_provider->get_attendees_from_module( $attendees_orm->all() );
 
 		foreach ( $attendees as $attendee ) {
 			// Skip attendees that are not for this ticket type.
 			if ( ! empty( $ticket_id ) && $ticket_id != $attendee['product_id'] ) {
 				continue;
 			}
+
+			$deleted_class = get_post_status( $attendee['attendee_id'] ) === 'trash' ? 'deleted' : '';
+			$deleted_label = ! empty( $deleted_class ) ? __( '( Deleted )', 'event-tickets-plus' ) : '';
 
 			$table_columns = [];
 
@@ -300,7 +310,7 @@ class Main {
 				),
 				sprintf(
 					'<strong class="tribe-attendee-meta-heading">%1$s</strong>',
-					esc_html( $attendee['ticket_id'] )
+					esc_html( $attendee['ticket_id'] . ' ' . $deleted_label )
 				),
 			];
 
@@ -333,7 +343,7 @@ class Main {
 			$table                        = new Tribe__Simple_Table( $table_columns );
 			$table->html_escape_td_values = false;
 			$table->table_attributes      = [
-				'class' => 'tribe-attendee-meta',
+				'class' => 'tribe-attendee-meta ' . $deleted_class,
 			];
 
 			echo $table->output_table();
@@ -353,6 +363,9 @@ class Main {
                 }
                 table.tribe-attendee-meta td {
 	                padding: 5px 10px !important;
+                }
+                table.tribe-attendee-meta.deleted {
+	                color: #a00 !important;
                 }
                 ';
 		wp_add_inline_style( 'event-tickets-admin-css', $custom_css );
