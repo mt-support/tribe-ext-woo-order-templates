@@ -212,8 +212,15 @@ class Main {
 	 * Adds the Event Title column header on WooCommerce Order Items table.
 	 *
 	 * @since TBD
+	 *
+	 * @param WC_Order $order Order Object.
 	 */
-	public function add_event_title_header() {
+	public function add_event_title_header( $order ) {
+
+		if ( ! $this->should_render_event_column( $order ) ) {
+			return;
+		}
+
 		?>
 		<th class="item_event sortable" data-sort="string-ins">
 			<?php esc_html_e( 'Event', PLUGIN_TEXT_DOMAIN ); ?>
@@ -233,6 +240,10 @@ class Main {
 	public function add_event_title_for_order_item( $product, $item, $item_id ) {
 
 		if ( ! is_object( $product ) ) {
+			return;
+		}
+
+		if ( ! $this->should_render_event_column( $item->get_order() ) ) {
 			return;
 		}
 
@@ -260,17 +271,35 @@ class Main {
 	 */
 	public function add_attendee_data_for_order_item( $item_id, $item, $product ) {
 
+		if ( ! is_object( $product ) ) {
+			return;
+		}
+
+		if ( ! $this->should_render_event_column( $item->get_order() ) ) {
+			return;
+		}
+
 		/** @var Tribe__Tickets_Plus__Commerce__WooCommerce__Main $woo_provider */
 		$woo_provider = tribe( 'tickets-plus.commerce.woo' );
 
 		$ticket_id = $product->get_id();
-		$attendees = $woo_provider->get_attendees_by_id( $item->get_order_id() );
+
+		$attendees_orm = tribe_attendees( $woo_provider->orm_provider );
+
+		$attendees_orm->by( 'order', $item->get_order_id() )
+					  ->by( 'ticket', $product->get_id() )
+					  ->by( 'status', [ 'publish', 'trash' ] );
+
+		$attendees = $woo_provider->get_attendees_from_module( $attendees_orm->all() );
 
 		foreach ( $attendees as $attendee ) {
 			// Skip attendees that are not for this ticket type.
 			if ( ! empty( $ticket_id ) && $ticket_id != $attendee['product_id'] ) {
 				continue;
 			}
+
+			$deleted_class = get_post_status( $attendee['attendee_id'] ) === 'trash' ? 'deleted' : '';
+			$deleted_label = ! empty( $deleted_class ) ? __( '( Deleted )', 'event-tickets-plus' ) : '';
 
 			$table_columns = [];
 
@@ -281,7 +310,7 @@ class Main {
 				),
 				sprintf(
 					'<strong class="tribe-attendee-meta-heading">%1$s</strong>',
-					esc_html( $attendee['ticket_id'] )
+					esc_html( $attendee['ticket_id'] . ' ' . $deleted_label )
 				),
 			];
 
@@ -314,7 +343,7 @@ class Main {
 			$table                        = new Tribe__Simple_Table( $table_columns );
 			$table->html_escape_td_values = false;
 			$table->table_attributes      = [
-				'class' => 'tribe-attendee-meta',
+				'class' => 'tribe-attendee-meta ' . $deleted_class,
 			];
 
 			echo $table->output_table();
@@ -335,8 +364,20 @@ class Main {
                 table.tribe-attendee-meta td {
 	                padding: 5px 10px !important;
                 }
+                table.tribe-attendee-meta.deleted {
+	                color: #a00 !important;
+                }
                 ';
 		wp_add_inline_style( 'event-tickets-admin-css', $custom_css );
+	}
+
+	/**
+	 * Check if we have Tickets in Order.
+	 *
+	 * @param WC_Order $order
+	 */
+	public function should_render_event_column( $order ) {
+		return (bool) $order->get_meta( '_tribe_has_tickets' );
 	}
 
 }
