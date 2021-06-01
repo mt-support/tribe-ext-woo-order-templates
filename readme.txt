@@ -36,6 +36,7 @@ We're always interested in your feedback and our [premium forums](https://theeve
 = [1.1.1] 2021-05-31 =
 * Fix - Fixed showing error for shipping items with the new admin order view.
 * Tweak - Highlight deleted tickets in the admin order view.
+* Enhancement - Add support for IAC fields for IAC enabled tickets.
 
 = [1.1.0] 2021-05-10 =
 * Fix - Showing fatal error on Thank you page after placing an order.
