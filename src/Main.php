@@ -139,7 +139,10 @@ class Main {
 				),
 			];
 
+			$table_columns = $this->maybe_add_iac_data( $attendee, $table_columns );
+
 			$fields = $this->get_attendee_meta( $attendee['product_id'], $attendee['qr_ticket_id'] );
+
 			if ( ! empty( $fields ) ) {
 				foreach ( $fields as $field ) {
 					$table_columns[] = [
@@ -162,6 +165,52 @@ class Main {
 
 			echo $table->output_table();
 		}
+	}
+
+	/**
+	 * Include attendee IAC data if available.
+	 *
+	 * @since 1.1.1
+	 *
+	 * @param array $attendee Attendee data.
+	 * @param array $table_columns Table columns.
+	 *
+	 * @return array $table_columns
+	 */
+	protected function maybe_add_iac_data( $attendee, $table_columns ) {
+
+		/** @var \Tribe\Tickets\Plus\Attendee_Registration\IAC $iac */
+		$iac            = tribe( 'tickets-plus.attendee-registration.iac' );
+		$iac_for_ticket = $iac->get_iac_setting_for_ticket( $attendee['product_id'] );
+		$iac_enabled    = $iac_for_ticket === $iac::ALLOWED_KEY || $iac_for_ticket === $iac::REQUIRED_KEY;
+
+		if ( ! $iac_enabled ) {
+			return $table_columns;
+		}
+
+		$table_columns[] = [
+				sprintf(
+						'<p class="tribe-attendee-meta-iac-name">%1$s</p>',
+						esc_html_x( 'Name', 'Attendee meta table.', PLUGIN_TEXT_DOMAIN )
+				),
+				sprintf(
+						'<p class="tribe-attendee-meta-heading">%1$s</p>',
+						esc_html( $attendee['holder_name'] )
+				),
+		];
+
+		$table_columns[] = [
+				sprintf(
+						'<p class="tribe-attendee-meta-iac-email">%1$s</p>',
+						esc_html_x( 'Email', 'Attendee meta table.', PLUGIN_TEXT_DOMAIN )
+				),
+				sprintf(
+						'<p class="tribe-attendee-meta-heading">%1$s</p>',
+						esc_html( $attendee['holder_email'] )
+				),
+		];
+
+		return $table_columns;
 	}
 
 	/**
