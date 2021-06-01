@@ -211,7 +211,7 @@ class Main {
 	/**
 	 * Adds the Event Title column header on WooCommerce Order Items table.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @param WC_Order $order Order Object.
 	 */
@@ -231,7 +231,7 @@ class Main {
 	/**
 	 * Add Event Link for Order Items.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @param \WC_Product $product
 	 * @param \WC_Order_Item_Product $item
@@ -263,7 +263,7 @@ class Main {
 	/**
 	 * Add attendee data to Order Item view.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @param string $item_id
 	 * @param \WC_Order_Item $item
@@ -353,7 +353,7 @@ class Main {
 	/**
 	 * Add inline styles for Attendee Table for Order Items.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 */
 	function admin_order_table_styles() {
 
@@ -373,6 +373,8 @@ class Main {
 
 	/**
 	 * Check if we have Tickets in Order.
+	 *
+	 * @since 1.1.1
 	 *
 	 * @param WC_Order $order
 	 */
