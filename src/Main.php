@@ -251,11 +251,11 @@ class Main {
 		$event_post = ! empty( $event_id ) ? get_post( $event_id ) : '' ;
 		$event      = ! empty( $event_post ) ? $event_post->post_title : '';
 		$schedule   = function_exists( 'tribe_events_event_schedule_details' ) ? tribe_events_event_schedule_details( $event_post ) : '';
-		$link       = sprintf( '<a target="_blank" rel="noopener nofollow" href="%s">%s</a> (%s)', get_permalink( $event_post ), esc_html( $event ), $schedule );
+		$link       = sprintf( '<a target="_blank" rel="noopener nofollow" href="%s">%s</a> %s', get_permalink( $event_post ), esc_html( $event ), $schedule );
 
 		?>
 		<td class="item_event" width="15%" data-sort-value="<?php echo esc_attr( $event ) ?>">
-			<?php echo $link; ?>
+			<?php echo wp_kses_post( $link ); ?>
 		</td>
 		<?php
 	}
